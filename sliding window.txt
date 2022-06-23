@@ -1,0 +1,378 @@
+1. Mximum sum subarray of size k
+
+long long int maximumSumSubarray(int k, vector<int> &arr , int n){
+        long long int i=0;
+        long long int j=0;
+        long long int sum=0;
+        long long int ans=0;
+        while(j<n){
+            sum+=arr[j];
+            if(j-i+1<k){
+                j++;
+            }
+            else if(j-i+1==k){
+                ans=max(sum,ans);
+                sum-=arr[i];
+                i++;
+                j++;
+            }
+        }
+        return ans;
+    }
+
+------------------------------------------------------------------------------------------------------
+
+2. First negative integer in every window of size k
+
+N = 5
+A[] = {-8, 2, 3, -6, 10}
+K = 2
+Output : 
+-8 0 -6 -6
+
+#include<bits/stdc++.h>
+vector<long long> printFirstNegativeInteger(long long int arr[],
+                                             long long int n, long long int k) {
+                       list<long long int>ls;
+                       vector<long long int>vec;
+                       long long int i=0;
+                       long long int j=0;
+                       while(j<n){
+                           if(arr[j]<0){
+                               ls.push_back(arr[j]);
+                           }
+                           if(j-i+1<k){
+                               j++;
+                           }
+                           else if(j-i+1==k){
+                             if(!ls.size()){
+                                 vec.push_back(0);
+                             }  
+                             else{
+                                 vec.push_back(ls.front());
+                             }
+                             if(arr[i]==ls.front()){
+                                 ls.pop_front();
+                             }
+                             i++;
+                             j++;
+                           }
+                       }
+                       return vec;
+ }
+
+
+------------------------------------------------------------------------------------------------------
+
+3. Count Occurences of Anagrams
+
+#include<bits/stdc++.h>
+	int search(string pat, string txt) {
+	  map<char,int>map1;
+	  map<char,int>map2;
+	  int k=0;
+	  while(k<pat.size()){
+	      map1[pat[k]]++;
+	      k++;
+	  }
+	 int i=0;
+	 int j=0;
+	 int ans=0;
+	 while(j<txt.size()){
+	     map2[txt[j]]++;
+	     if(j-i+1<pat.size()){
+	         j++;
+	     }
+	     else if(j-i+1==pat.size()){
+	         if(map1==map2){
+	             ans++;
+	         }
+	         map2[txt[i]]--;
+	         if(map2[txt[i]]==0){
+	             map2.erase(txt[i]);
+	         }
+	         i++;
+	         j++;
+	     }
+	 }
+	 return ans;
+	}
+
+------------------------------------------------------------------------------------------------------
+
+
+4. Maximum of all subarrays of size K
+
+#include<bits/stdc++.h>
+    vector <int> max_of_subarrays(int arr[], int n, int k)
+    {
+        vector<int>ans;
+     list<int>l;
+       int i=0;
+       int j=0;
+       while(j<n){
+           while(arr[j]>l.back() && l.size()>0){
+               l.pop_back();
+           }
+           l.push_back(arr[j]); 
+           if(j-i+1<k){
+               j++;
+           }
+           else if(j-i+1==k){
+             ans.push_back(l.front());
+            
+             if(arr[i]==l.front()){
+                 l.pop_front();
+             }
+             i++;
+             j++;
+           }
+           
+       }return ans;
+    }
+
+------------------------------------------------------------------------------------------------------
+
+5. Longest subarray of sum k (+ve numbers only)
+
+#include <iostream>
+#include <climits>
+#include <vector>
+using namespace std;
+int solve(vector<int> &A, const int &k) {
+	int n = A.size();
+	int i = 0, j = 0, sum = 0;
+	int mx = INT_MIN;
+	while (j < n) {
+		sum += A[j];
+		if (sum < k) {
+			j++;
+		} else if (sum == k) {
+			mx = max(mx, j - i + 1);
+			j++;
+		} else if (sum > k) {
+			while (sum > k) {
+				sum = sum - A[i];
+				i++;
+				}	
+				if(sum==k){
+				mx = max(mx, j - i + 1);
+			}
+			j++;
+		}
+	}
+	return mx;
+}
+int main()
+{
+	vector<int> A{1,2,3,7,5};
+	int k = 12;
+	cout << solve(A, k);
+	return 0;
+}
+
+
+understood the (-ve numbers ) approach also using hashmap
+
+  int findSubArraySum(int nums[], int N, int k)
+    {
+        unordered_map<int,int> mp;
+        int sum=0;
+        int ans=0;
+        
+        for(int i=0;i<N;i++)
+        {
+            sum+=nums[i];
+            if(sum==k)
+                ans++;
+            if(mp.find(sum-k)!=mp.end())
+                ans+=mp[sum-k];
+            mp[sum]++;
+        }
+        return ans;
+    }
+
+------------------------------------------------------------------------------------------------------
+
+6. Longest subarray of sum K.
+
+int longestKSubstr(string s, int k) {
+        unordered_map<char,int> mapp;
+        int i=0;
+        int j=0;
+        int ans=-1;
+        while(j<s.size()){
+          mapp[s[j]]++;
+            if(mapp.size()<k)
+            {
+                j++;
+            }
+            else if(mapp.size()==k)
+            {
+                if(j-i+1>ans)
+                {
+                    ans=j-i+1;
+                }
+                j++;
+            }
+            else{
+             while(mapp.size()>k){
+                 mapp[s[i]]--;
+                 if(mapp[s[i]]==0)
+                 {
+                     mapp.erase(s[i]);
+                 }
+                 i++;
+             } 
+             j++;
+            }
+        }
+        return ans;
+    }
+
+------------------------------------------------------------------------------------------------------
+
+7. Longest Substring With Without Repeating Characters
+
+int longestSubstrDistinctChars (string s)
+{
+    unordered_map<char,int>mp;
+    int i=0;
+    int j=0;
+    int ans=0;
+    while(j<s.size())
+    {
+        mp[s[j]]++;
+        if(mp.size()==j-i+1)
+        {
+             if(j-i+1>ans)
+            {
+                ans=j-i+1;
+            }
+        }
+        else if(mp.size()<j-i+1){
+            while(mp.size()<j-i+1)
+            {
+                mp[s[i]]--;
+                if(mp[s[i]]==0)
+                {
+                    mp.erase(s[i]);
+                }
+                i++;
+            }
+        }
+        j++;
+    }
+    return ans;
+}
+
+------------------------------------------------------------------------------------------------------
+
+8. Pick toys
+
+same as 
+(Longest subarray of sum K)
+only k is set to 2.
+meaning that u can have 2 unique characters or toys :)
+
+int longestKSubstr(string s, int k) {
+        unordered_map<char,int> mapp;
+        int i=0;
+        int j=0;
+        int ans=-1;
+        while(j<s.size()){
+          mapp[s[j]]++;
+            if(mapp.size()<k)
+            {
+                j++;
+            }
+            else if(mapp.size()==k)
+            {
+                if(j-i+1>ans)
+                {
+                    ans=j-i+1;
+                }
+                j++;
+            }
+            else{
+             while(mapp.size()>k){
+                 mapp[s[i]]--;
+                 if(mapp[s[i]]==0)
+                 {
+                     mapp.erase(s[i]);
+                 }
+                 i++;
+             } 
+             j++;
+            }
+        }
+        return ans;
+    }
+
+------------------------------------------------------------------------------------------------------
+
+9. Minimum Window Substring
+
+first find the window which has all the characters we needed by increasing "j" then reduce the size of array  by increasing "i" until one character gets out due to which we have to start the first process to find the window again which contains all the character we want by increasing the j pointer.
+
+
+Input: s = "ADOBECODEBANC", t = "ABC"
+BY INCREASING J          BY INCREASING I  
+s="ADOBEC"               s="DOBEC"
+s="DOBECODEBA"           s="ODEBA"
+s="ODEBANC"              s="ANC"
+
+in middle of increasing i we are getting potential results which we are storing for result
+
+CODE:-
+
+string minWindow(string s, string t) {
+        if(s.length()<t.length())
+            return "";
+        
+        unordered_map<char,int>umap;
+        int i=0,j=0,mn=INT_MAX,count=0;
+        string res="";
+        
+        for(int i=0;i<t.length();i++)
+            umap[t[i]]++;
+        
+        count=umap.size();
+        //SW
+        while(j<s.length()){
+            //cals
+            if(umap.find(s[j])!=umap.end()){
+                umap[s[j]]--;
+                //decrease count if val is 0
+                if(umap[s[j]]==0)
+                    count--;
+            }
+
+            //window hit
+            if(count==0){
+                if(mn>j-i+1){
+                    mn=j-i+1;
+                    res=s.substr(i,mn);
+                    }
+                
+                while(i<=j && count==0){
+                    if(umap.find(s[i])!=umap.end()){
+                        umap[s[i]]++;
+                        
+                        if(umap[s[i]]==1){
+                            if(mn>j-i+1){
+                                mn=j-i+1;
+                                res=s.substr(i,mn);
+                            }
+                            count++;
+                        }
+                    }
+                    i++;
+                }
+            }
+            j++;
+        }
+        if(mn==INT_MAX)
+            return "";
+        return res;
+    }
