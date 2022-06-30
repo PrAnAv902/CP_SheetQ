@@ -1,0 +1,303 @@
+1. https://codeforces.com/problemset/problem/282/A
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+   int x=0;
+   int n;
+   cin>>n;
+   while(n)
+   {
+       string a;
+       cin>>a;
+       if(a=="X++" || a=="++X")
+       {
+          x++; 
+       }
+       else{
+           x--;
+       }
+       n--;
+   }
+   cout<<x;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+2. https://codeforces.com/contest/514/problem/A
+
+/*
+'2'-'0' => 2 in integer
+'9'-2 => if stored in char '7' else stored in integer 55
+*/
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    string a;
+    cin>>a;
+    for(char &i:a){
+            if(i>'4'){
+               i='9'-(i-'0'); 
+            }
+    }
+    if(a[0]=='0'){
+        a[0]='9';
+    }
+   cout<<a;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+3. https://codeforces.com/problemset/problem/263/A
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+vector<vector<int>>a;
+int i=0;
+int y=0;
+int z=0;
+while(i<5){
+    vector<int>b;
+    int j=0;
+    while(j<5){
+    int c;
+    cin>>c;
+    if(c==1)
+    {
+        y=i+1;
+        z=j+1;
+    }
+    b.push_back(c);
+        j++;
+    }  
+    a.push_back(b);
+    i++;
+}
+cout<<abs(y-3)+abs(z-3);
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+4. https://codeforces.com/problemset/problem/151/A
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    int n,k,l,c,d,p,nl,np;
+    cin>>n>>k>>l>>c>>d>>p>>nl>>np;
+    int a=(k*l)/nl;
+    int b=c*d;
+    p=p/np;
+    int e=min(a,b);
+      cout<<min(e,p)/n;  
+   
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+5. https://codeforces.com/problemset/problem/723/A
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+   int a,b,c;
+   cin>>a>>b>>c;
+   int maxi=max(a,max(b,c)); //max amongst 3
+   int mini=min(a,min(b,c)); //min amongst 3
+   int mid=((a+b+c)-maxi-mini); // mid amongst 3 
+   cout<<(mid-mini)+(maxi-mid);
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+6. https://codeforces.com/problemset/problem/1352/A
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+   int t;
+   cin>>t;
+  
+   while(t)
+   { 
+       vector<int>vec;
+       int n;
+       cin>>n;
+       int sum=0;
+       int m=1;
+       while(n)
+       {
+           if(n%10!=0)
+           {
+               sum++;
+               vec.push_back((n%10)*m);
+           }
+           m*=10;
+           n/=10;
+       }
+       cout<<sum<<endl;
+       for(auto it:vec)
+       {
+           cout<<it<<" ";
+       }
+       cout<<endl;
+       t--;
+   }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+7. https://codeforces.com/problemset/problem/510/A
+
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+int n,m;
+cin>>n>>m;
+vector<vector<char>>a;
+int i=0;
+bool flag=true;
+while(i<n)
+{
+    vector<char>b;
+    int j=0;
+    while(j<m)
+    {
+        if(i%2==0) b.push_back('#');
+        else{
+            if(flag){
+                if(j==m-1)
+                {
+                    b.push_back('#');
+                    flag=false;
+                }
+                else{
+                     b.push_back('.');
+                     
+                }
+            }
+            else{
+                if(j==0)
+                {
+                    b.push_back('#');
+                
+                }
+                else if(j==m-1)
+                {
+                    b.push_back('.');
+                        flag=true;
+                }
+                else{
+                     b.push_back('.');
+                }
+            }
+        }
+        j++;
+    }
+  
+    
+    a.push_back(b);
+    i++;
+}
+for(auto it:a){
+    for(auto it1:it){
+        cout<<it1;
+    }
+    cout<<endl;
+}
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+8. https://codeforces.com/problemset/problem/785/A
+
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int ans=0;
+    int n;
+    cin>>n;
+    while(n)
+    {
+        string a;
+        cin>>a;
+        if(a=="Tetrahedron") ans+=4;
+        else if(a=="Cube")ans+=6;
+        else if(a=="Octahedron")ans+=8;
+        else if(a=="Dodecahedron")ans+=12;
+        else ans+=20;
+        n--;
+    }
+    cout<<ans;
+}
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+9. https://codeforces.com/problemset/problem/144/A
+
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+ int n;
+ cin>>n;
+ vector<int>vec;
+ int i=0;
+ int max=INT_MIN;
+ int min=INT_MAX;
+ int j=0;
+ int k=0;
+ while(i<n)
+ {
+     int a;
+     cin>>a;
+     if(a>max)
+     {
+         max=a;
+         j=i;
+     }
+     if(a<=min)
+     {
+        min=a;
+        k=i;
+     }
+     vec.push_back(a);
+     i++;
+ }
+ int ans=j+(n-1-k);
+ if(j>k){
+     ans--;
+ }
+ cout<<ans;
+}
